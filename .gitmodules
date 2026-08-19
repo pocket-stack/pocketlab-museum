@@ -1,0 +1,4 @@
+[submodule "external/pocketjs"]
+	path = external/pocketjs
+	url = https://github.com/pocket-stack/pocketjs.git
+	shallow = true
