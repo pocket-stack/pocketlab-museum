@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.vite/
+.vite-ssg-temp/
+*.log
+.DS_Store
+.env*
