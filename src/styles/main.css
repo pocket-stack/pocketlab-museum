@@ -1,0 +1,218 @@
+/* src/styles/main.css — Tailwind CSS v4 entry: the design tokens (@theme),
+   the base layer, and the handful of composed utilities every page reuses.
+   DESIGN.md is the human-readable description of this file; keep both in step. */
+
+@import "tailwindcss";
+@import "./doc.css";
+
+/* ---- design tokens -------------------------------------------------------- */
+/* `static` emits every variable so the plain CSS in doc.css can read them too. */
+@theme static {
+  /* The museum has its own palette; the stock Tailwind colours are removed so
+     `text-cyan` can only ever mean the Pocket Lab cyan. */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* surfaces — near-black navy, layered by elevation */
+  --color-bg: #0a0d12;
+  --color-bg-2: #0e1219;
+  --color-panel: #11161f;
+  --color-panel-2: #161c27;
+  --color-glass: #070a10;
+  --color-line: #1e2735;
+  --color-line-2: #2a3648;
+  --color-line-3: #3a4a63;
+
+  /* ink — three steps of text contrast */
+  --color-ink: #e8eef7;
+  --color-ink-2: #a7b4c8;
+  --color-muted: #76839a;
+  --color-muted-2: #57627a;
+
+  /* accents — one per meaning, never decorative */
+  --color-cyan: #67e8f9;
+  --color-green: #4ade80;
+  --color-amber: #fbbf24;
+  --color-rose: #fb7185;
+
+  /* type */
+  --font-sans: "Space Grotesk", -apple-system, system-ui, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --tracking-label: 0.16em;
+
+  /* rhythm */
+  --container-wrap: 73.75rem; /* 1180px */
+  --radius-sm: 2px;
+
+  /* motion */
+  --ease-lab: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --default-transition-duration: 180ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---- base ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-bg);
+    background-image:
+      linear-gradient(rgba(103, 232, 249, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(103, 232, 249, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  ::selection {
+    background: rgba(103, 232, 249, 0.3);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0s !important;
+      animation-duration: 0s !important;
+    }
+  }
+}
+
+/* ---- composed utilities ---------------------------------------------------- */
+/* Each is one visual idea used on many pages; everything else is utilities in
+   the templates. */
+
+/* the page column */
+@utility wrap {
+  width: 100%;
+  max-width: var(--container-wrap);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* a page section: fluid vertical padding and a hairline below */
+@utility sect {
+  padding-block: clamp(2.8rem, 7vw, 4.5rem);
+  border-bottom: 1px solid var(--color-line);
+}
+
+/* the mono uppercase label */
+@utility mlabel {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* the bench grid, for vitrines and cards (28px) */
+@utility bg-grid-sm {
+  background-image:
+    radial-gradient(70% 90% at 50% 100%, rgba(103, 232, 249, 0.09), transparent 70%),
+    linear-gradient(rgba(103, 232, 249, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103, 232, 249, 0.05) 1px, transparent 1px);
+  background-size:
+    auto,
+    28px 28px,
+    28px 28px;
+  background-color: var(--color-glass);
+}
+
+/* the call-to-action button */
+@utility cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.7rem 1.2rem;
+  background: var(--color-cyan);
+  color: #06282e;
+  border: 1px solid var(--color-cyan);
+  transition:
+    filter 180ms var(--ease-lab),
+    background 180ms var(--ease-lab),
+    color 180ms var(--ease-lab),
+    border-color 180ms var(--ease-lab);
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
+
+@utility cta-ghost {
+  background: transparent;
+  color: var(--color-cyan);
+  border-color: var(--color-line-2);
+  &:hover {
+    background: rgba(103, 232, 249, 0.14);
+    border-color: var(--color-cyan);
+    filter: none;
+  }
+}
+
+/* a status dot; colour it with bg-* and glow-* */
+@utility dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+@utility glow-cyan {
+  box-shadow: 0 0 6px var(--color-cyan);
+}
+
+@utility glow-green {
+  box-shadow: 0 0 6px var(--color-green);
+}
+
+@utility glow-amber {
+  box-shadow: 0 0 6px var(--color-amber);
+}
+
+/* inline code inside curated prose (the inlineCode helper's <code>) */
+@utility prose-code {
+  & code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--color-ink);
+    background: var(--color-panel-2);
+    border: 1px solid var(--color-line);
+    padding: 0.05em 0.3em;
+    border-radius: var(--radius-sm);
+  }
+}

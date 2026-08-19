@@ -1,0 +1,359 @@
+/* src/styles/doc.css — styling for upstream markdown rendered by
+   plugins/pocketjs-docs.ts (class "doc") and for highlighted source files
+   (class "doc-code"). The content is upstream's and carries no utility
+   classes, so this is plain CSS over the Tailwind theme variables, placed in
+   the components layer so utilities can still override it. */
+
+@layer components {
+
+.doc {
+  color: var(--color-ink-2);
+  font-size: 0.96rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.doc > :first-child {
+  margin-top: 0;
+}
+
+.doc h1,
+.doc h2,
+.doc h3,
+.doc h4,
+.doc h5,
+.doc h6 {
+  color: var(--color-ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  scroll-margin-top: 5rem;
+}
+
+.doc h1 {
+  font-size: 1.75rem;
+  margin: 2.4rem 0 1rem;
+}
+
+.doc h2 {
+  font-size: 1.35rem;
+  margin: 2.6rem 0 0.9rem;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--color-line-2);
+}
+
+.doc h3 {
+  font-size: 1.1rem;
+  margin: 2rem 0 0.6rem;
+}
+
+.doc h4,
+.doc h5,
+.doc h6 {
+  font-size: 0.95rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.doc h4::before {
+  content: "// ";
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-weight: 400;
+}
+
+.doc-anchor {
+  margin-left: 0.4em;
+  color: var(--color-muted-2);
+  font-weight: 400;
+  opacity: 0;
+  transition: opacity 180ms var(--ease-lab);
+}
+
+.doc h1:hover .doc-anchor,
+.doc h2:hover .doc-anchor,
+.doc h3:hover .doc-anchor,
+.doc h4:hover .doc-anchor,
+.doc h5:hover .doc-anchor,
+.doc h6:hover .doc-anchor,
+.doc-anchor:focus-visible {
+  opacity: 1;
+}
+
+.doc p {
+  margin: 0 0 1rem;
+}
+
+.doc strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.doc em {
+  color: var(--color-ink);
+}
+
+.doc a {
+  color: var(--color-cyan);
+  text-decoration: underline;
+  text-decoration-color: rgba(103, 232, 249, 0.35);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 180ms var(--ease-lab);
+}
+
+.doc a:hover {
+  text-decoration-color: var(--color-cyan);
+}
+
+.doc ul,
+.doc ol {
+  margin: 0 0 1rem;
+  padding-left: 1.4rem;
+}
+
+.doc li {
+  margin: 0.3rem 0;
+}
+
+.doc li > ul,
+.doc li > ol {
+  margin: 0.3rem 0 0.3rem;
+}
+
+.doc li::marker {
+  color: var(--color-muted);
+}
+
+.doc ul.contains-task-list {
+  list-style: none;
+  padding-left: 0.2rem;
+}
+
+.doc input[type="checkbox"] {
+  accent-color: var(--color-cyan);
+  margin-right: 0.4rem;
+}
+
+.doc hr {
+  border: 0;
+  border-top: 1px dashed var(--color-line-2);
+  margin: 2rem 0;
+}
+
+.doc blockquote {
+  margin: 0 0 1rem;
+  padding: 0.6rem 1rem;
+  border-left: 2px solid var(--color-amber);
+  background: var(--color-bg-2);
+  color: var(--color-ink-2);
+}
+
+.doc blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.doc img {
+  border: 1px solid var(--color-line-2);
+  background: #000;
+  margin: 0.5rem 0 1rem;
+}
+
+.doc table img {
+  margin: 0;
+}
+
+/* inline code */
+.doc :not(pre) > code {
+  font-size: 0.86em;
+  padding: 0.1em 0.35em;
+  color: var(--color-ink);
+  background: var(--color-panel-2);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  overflow-wrap: anywhere;
+}
+
+/* tables */
+.doc-table {
+  overflow-x: auto;
+  margin: 0 0 1.2rem;
+  border: 1px solid var(--color-line-2);
+  background: var(--color-bg-2);
+}
+
+.doc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.doc th,
+.doc td {
+  padding: 0.55rem 0.8rem;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid var(--color-line);
+}
+
+.doc th {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-muted);
+  background: var(--color-panel);
+  border-top: 0;
+  white-space: nowrap;
+}
+
+.doc tr:hover td {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+/* fenced code (shiki output wrapped by the plugin) */
+.doc-code {
+  position: relative;
+  margin: 0 0 1.2rem;
+  border: 1px solid var(--color-line-2);
+  background: #070a10;
+}
+
+.doc-code::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.2rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  border-left: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-panel);
+  pointer-events: none;
+}
+
+.doc-code[data-lang="text"]::before {
+  display: none;
+}
+
+.doc-code pre.shiki {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.75;
+  background: transparent !important;
+  tab-size: 2;
+}
+
+.doc-code pre.shiki code {
+  display: block;
+  min-width: max-content;
+  font-family: var(--font-mono);
+}
+
+/* standalone highlighted source files get a header bar from the component;
+   the shiki block itself shares the fence styling above */
+.code-file .doc-code {
+  margin: 0;
+  border: 0;
+}
+
+/* framework tabs (:::framework-code in upstream website docs) */
+.fw-code {
+  margin: 0 0 1.2rem;
+  border: 1px solid var(--color-line-2);
+  background: #070a10;
+}
+
+.fw-code .fw-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fw-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-panel);
+  overflow-x: auto;
+}
+
+.fw-tab {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.9rem;
+  color: var(--color-muted);
+  cursor: pointer;
+  border-right: 1px solid var(--color-line);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  transition:
+    color 180ms var(--ease-lab),
+    border-color 180ms var(--ease-lab);
+}
+
+.fw-tab:hover {
+  color: var(--color-ink);
+}
+
+.fw-panels .fw-panel {
+  display: none;
+}
+
+.fw-panels .doc-code {
+  margin: 0;
+  border: 0;
+}
+
+.fw-radio[data-framework="solid"]:checked ~ .fw-tabs .fw-tab[data-framework="solid"],
+.fw-radio[data-framework="vue-vapor"]:checked ~ .fw-tabs .fw-tab[data-framework="vue-vapor"],
+.fw-radio[data-framework="vue-sfc"]:checked ~ .fw-tabs .fw-tab[data-framework="vue-sfc"],
+.fw-radio[data-framework="octane"]:checked ~ .fw-tabs .fw-tab[data-framework="octane"] {
+  color: var(--color-cyan);
+  border-bottom-color: var(--color-cyan);
+}
+
+.fw-radio[data-framework="solid"]:checked ~ .fw-panels .fw-panel[data-framework="solid"],
+.fw-radio[data-framework="vue-vapor"]:checked ~ .fw-panels .fw-panel[data-framework="vue-vapor"],
+.fw-radio[data-framework="vue-sfc"]:checked ~ .fw-panels .fw-panel[data-framework="vue-sfc"],
+.fw-radio[data-framework="octane"]:checked ~ .fw-panels .fw-panel[data-framework="octane"] {
+  display: block;
+}
+
+/* details/summary occasionally used upstream */
+.doc details {
+  border: 1px solid var(--color-line-2);
+  padding: 0.6rem 0.9rem;
+  margin: 0 0 1rem;
+  background: var(--color-bg-2);
+}
+
+.doc summary {
+  cursor: pointer;
+  color: var(--color-ink);
+}
+
+@media (max-width: 640px) {
+  .doc {
+    font-size: 0.92rem;
+  }
+
+  .doc h2 {
+    font-size: 1.2rem;
+  }
+
+  .doc-code pre.shiki {
+    font-size: 0.74rem;
+    padding: 0.8rem 0.8rem;
+  }
+}
+}
