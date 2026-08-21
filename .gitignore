@@ -1,5 +1,6 @@
 node_modules/
 dist/
+public/og/
 .vite/
 .vite-ssg-temp/
 *.log
