@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { useHead } from "@unhead/vue";
+import { useHead, useSeoMeta } from "@unhead/vue";
 
-useHead({ title: "Not in the collection", meta: [{ name: "robots", content: "noindex" }] });
+useHead({ title: "Not in the collection" });
+useSeoMeta({
+  description: "No Pocket Museum exhibit exists at this address.",
+  robots: "noindex,nofollow",
+});
 </script>
 
 <template>
@@ -14,7 +18,7 @@ useHead({ title: "Not in the collection", meta: [{ name: "robots", content: "noi
       </p>
       <div class="mt-8 flex flex-wrap gap-[0.8rem]">
         <router-link class="cta" to="/#collection">Back to the collection →</router-link>
-        <router-link class="cta cta-ghost" to="/catalog">Open the catalogue</router-link>
+        <router-link class="cta cta-ghost" to="/catalog/">Open the catalogue</router-link>
       </div>
     </div>
   </section>

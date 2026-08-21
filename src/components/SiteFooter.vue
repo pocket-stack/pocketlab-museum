@@ -23,9 +23,9 @@ const col = "flex flex-col gap-[0.45rem] font-mono text-[0.74rem] text-ink-2 [&_
         <div :class="col">
           <span class="mlabel mb-1">Museum</span>
           <router-link to="/#collection">Collection</router-link>
-          <router-link to="/catalog">Catalogue</router-link>
+          <router-link to="/catalog/">Catalogue</router-link>
           <router-link to="/#workbench">Workbench</router-link>
-          <router-link to="/about">About &amp; credits</router-link>
+          <router-link to="/about/">About &amp; credits</router-link>
         </div>
         <div :class="col">
           <span class="mlabel mb-1">Pocket</span>

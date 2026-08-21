@@ -23,5 +23,5 @@
       "@upstream/*": ["external/pocketjs/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.d.ts", "plugins/**/*.ts", "vite.config.ts"]
+  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.d.ts", "plugins/**/*.ts", "scripts/**/*.ts", "vite.config.ts"]
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Device } from "@/data/types";
+import { devicePath } from "@/lib/site";
 import PathBadge from "./PathBadge.vue";
 import StatusBadge from "./StatusBadge.vue";
 
@@ -8,7 +9,7 @@ defineProps<{ device: Device; compact?: boolean }>();
 
 <template>
   <router-link
-    :to="`/devices/${device.slug}`"
+    :to="devicePath(device.slug)"
     class="group flex min-w-0 flex-col border border-line-2 bg-bg-2 transition-colors hover:border-cyan hover:bg-panel"
   >
     <div

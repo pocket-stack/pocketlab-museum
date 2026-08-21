@@ -2,6 +2,7 @@ import { ViteSSG } from "vite-ssg";
 import type { RouteRecordRaw } from "vue-router";
 import App from "./App.vue";
 import { devices } from "./data/devices";
+import { devicePath } from "./lib/site";
 import { routes } from "./router";
 import "./styles/main.css";
 
@@ -26,5 +27,5 @@ export function includedRoutes(paths: string[], _routes: Readonly<RouteRecordRaw
   const staticPaths = paths.filter((p) => !p.includes(":"));
   // "/404" renders the catch-all route; vite.config.ts copies it to dist/404.html
   // for hosts that serve a root-level 404 page.
-  return [...staticPaths, ...devices.map((d) => `/devices/${d.slug}`), "/404"];
+  return [...staticPaths, ...devices.map((d) => devicePath(d.slug)), "/404"];
 }

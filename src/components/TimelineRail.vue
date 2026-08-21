@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import type { Device } from "@/data/types";
+import { devicePath } from "@/lib/site";
 
 const props = defineProps<{ devices: readonly Device[] }>();
 
@@ -35,7 +36,7 @@ const groups = computed(() => {
           <router-link
             v-for="d in g.list"
             :key="d.slug"
-            :to="`/devices/${d.slug}`"
+            :to="devicePath(d.slug)"
             class="font-mono text-[0.72rem] whitespace-nowrap text-ink-2 transition-colors hover:text-cyan"
           >
             {{ d.shortName }}<span v-if="d.pocket.path === 'aot'" class="ml-1 text-[0.58rem] tracking-[0.1em] text-amber">aot</span>

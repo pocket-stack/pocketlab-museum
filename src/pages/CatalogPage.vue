@@ -1,22 +1,14 @@
 <script setup lang="ts">
-import { useHead } from "@unhead/vue";
 import { computed, ref } from "vue";
 import PathBadge from "@/components/PathBadge.vue";
 import SectionHead from "@/components/SectionHead.vue";
 import StatusBadge from "@/components/StatusBadge.vue";
 import { FAMILY_LABEL, devices } from "@/data/devices";
 import type { Device } from "@/data/types";
-import { SITE, absoluteUrl } from "@/lib/site";
+import { catalogSeo, usePageSeo } from "@/lib/seo";
+import { devicePath } from "@/lib/site";
 
-useHead({
-  title: "Catalogue",
-  meta: [
-    { name: "description", content: "Every machine in the Pocket Museum side by side: processor, memory, display, execution path and PocketJS status." },
-    { property: "og:title", content: `Catalogue · ${SITE.name}` },
-    { property: "og:url", content: absoluteUrl("/catalog") },
-  ],
-  link: [{ rel: "canonical", href: absoluteUrl("/catalog") }],
-});
+usePageSeo(catalogSeo(devices));
 
 type SortKey = "year" | "name" | "family" | "path" | "status";
 const sortKey = ref<SortKey>("year");
@@ -102,7 +94,7 @@ const mono = "font-mono text-[0.74rem]";
             <tr v-for="d in rows" :key="d.slug" class="transition-colors hover:bg-panel">
               <td :class="td"><span class="font-mono text-[0.72rem] text-amber">{{ d.year }}</span></td>
               <td :class="td">
-                <router-link :to="`/devices/${d.slug}`" class="group flex items-center gap-[0.7rem] text-ink">
+                <router-link :to="devicePath(d.slug)" class="group flex items-center gap-[0.7rem] text-ink">
                   <img
                     :src="d.hero.src"
                     alt=""

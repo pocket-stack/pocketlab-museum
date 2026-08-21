@@ -8,11 +8,16 @@ const route = useRoute();
 watch(() => route.fullPath, () => (open.value = false));
 
 const links = [
-  { to: "/#collection", label: "Collection", match: "/" },
-  { to: "/catalog", label: "Catalogue", match: "/catalog" },
-  { to: "/#workbench", label: "Workbench", match: "/#workbench" },
-  { to: "/about", label: "About", match: "/about" },
+  { to: "/#collection", label: "Collection" },
+  { to: "/catalog/", label: "Catalogue" },
+  { to: "/#workbench", label: "Workbench" },
+  { to: "/about/", label: "About" },
 ];
+
+function isActive(to: string): boolean {
+  const [path, hash] = to.split("#");
+  return route.path === path && (hash ? route.hash === `#${hash}` : !route.hash);
+}
 
 const linkClass =
   "whitespace-nowrap transition-colors hover:text-cyan max-md:border-t max-md:border-line max-md:px-[clamp(1.25rem,4vw,2.5rem)] max-md:py-4";
@@ -62,7 +67,7 @@ const linkClass =
           v-for="l in links"
           :key="l.to"
           :to="l.to"
-          :class="[linkClass, { 'text-cyan': l.match === route.path || (l.match === '/' && route.path === '/' && !route.hash) }]"
+          :class="[linkClass, { 'text-cyan': isActive(l.to) }]"
         >
           {{ l.label }}
         </router-link>

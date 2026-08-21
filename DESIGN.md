@@ -181,6 +181,17 @@ A pattern used by one component stays in that component's template
   into this repository.
 - No stock imagery, no illustrations of hardware, no gradients as decoration.
 
+### Social cards
+
+Open Graph cards are the typographic exception to the site's photograph-first
+imagery: they are generated at build time as 1200×630 PNGs and use no product
+photo. Every indexable page gets its own card. A card repeats the 56 px bench
+grid, sharp outer rule, bracket mark, mono provenance line and three-cell data
+strip; device cards take their accent from the execution path (Guest cyan,
+Pocket Vapor amber, native green). Space Grotesk carries the page title and
+IBM Plex Mono carries labels and specifications. Text stays inside a 72 px
+safe area and may use at most two lines per title, description or data value.
+
 ## 7. Motion
 
 Hover and focus transitions run `0.18s cubic-bezier(0.2, 0.7, 0.2, 1)`; the
