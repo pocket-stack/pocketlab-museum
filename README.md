@@ -19,8 +19,9 @@ code.
 ```sh
 git clone --recurse-submodules --shallow-submodules <this repo>
 bun install
-bun run dev          # http://localhost:5173
-bun run check        # typecheck + static build into dist/
+bun run dev          # generate OG cards, then serve http://localhost:5173
+bun run og:generate  # regenerate the ignored public/og/ preview assets
+bun run check        # typecheck + OG generation + static build into dist/
 ```
 
 If the submodule is missing (`external/pocketjs` empty), run
@@ -44,5 +45,6 @@ into this repository.
 ## Deploy
 
 `bun run build` writes a fully static site to `dist/` (nested `index.html`
-per route). Any static host works; `museum.pocketlab.build` is expected to
+per route), including one content-hashed 1200×630 PNG social card per
+indexable page. Any static host works; `museum.pocketlab.build` is expected to
 serve `dist/` as-is.
