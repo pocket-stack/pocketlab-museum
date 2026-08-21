@@ -38,7 +38,7 @@ const stats = [
     <div class="wrap">
       <span class="mlabel mb-5 block text-cyan">// pocketlab.build · permanent collection</span>
       <h1 class="max-w-[22ch] text-[clamp(2.4rem,6.2vw,4.6rem)] leading-[1.02] font-bold tracking-[-0.03em]">
-        New software for machines the industry <span class="text-cyan">finished with</span>.
+        Modern software for any machine <span class="text-cyan">worth turning on</span>.
       </h1>
       <p class="mt-6 max-w-[62ch] text-[1.06rem] text-ink-2 [&_strong]:font-semibold [&_strong]:text-ink">
         Every exhibit runs <strong>today's Pocket stack on the original hardware</strong> — as a live JavaScript guest or a

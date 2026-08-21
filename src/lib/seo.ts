@@ -70,7 +70,7 @@ export function homeSeo(devices: readonly Device[]): SeoPage {
     id: "home",
     eyebrow: "// pocketlab.build · permanent collection",
     title: SITE.name,
-    description: "New software for machines the industry finished with.",
+    description: "Modern software for any machine worth turning on.",
     badge: "museum index",
     accent: "cyan",
     stats: [
