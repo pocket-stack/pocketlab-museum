@@ -1,24 +1,14 @@
 <script setup lang="ts">
-import { useHead } from "@unhead/vue";
 import { computed, ref } from "vue";
 import DeviceCard from "@/components/DeviceCard.vue";
 import SectionHead from "@/components/SectionHead.vue";
 import TimelineRail from "@/components/TimelineRail.vue";
-import { permanentCollection, workbench } from "@/data/devices";
+import { devices, permanentCollection, workbench } from "@/data/devices";
 import type { ExecutionPath } from "@/data/types";
 import { POCKET_TARGETS } from "@/data/upstream";
-import { SITE } from "@/lib/site";
+import { homeSeo, usePageSeo, websiteJsonLd } from "@/lib/seo";
 
-useHead({
-  title: undefined,
-  meta: [
-    { name: "description", content: SITE.description },
-    { property: "og:title", content: SITE.name },
-    { property: "og:description", content: SITE.description },
-    { property: "og:url", content: SITE.url },
-  ],
-  link: [{ rel: "canonical", href: `${SITE.url}/` }],
-});
+usePageSeo(homeSeo(devices), [websiteJsonLd()]);
 
 type Filter = "all" | ExecutionPath;
 const filter = ref<Filter>("all");
@@ -57,7 +47,7 @@ const stats = [
       </p>
       <div class="mt-8 flex flex-wrap gap-[0.8rem]">
         <a class="cta" href="#collection">Enter the collection →</a>
-        <router-link class="cta cta-ghost" to="/catalog">Compare the machines</router-link>
+        <router-link class="cta cta-ghost" to="/catalog/">Compare the machines</router-link>
       </div>
 
       <dl class="mt-11 grid grid-cols-2 gap-px border border-line-2 bg-line-2 md:grid-cols-4">

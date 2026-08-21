@@ -1,20 +1,12 @@
 <script setup lang="ts">
-import { useHead } from "@unhead/vue";
 import SectionHead from "@/components/SectionHead.vue";
 import { devices } from "@/data/devices";
 import { availableDocs, upstream } from "@/data/upstream";
 import { isoDay } from "@/lib/format";
-import { SITE, absoluteUrl } from "@/lib/site";
+import { aboutSeo, usePageSeo } from "@/lib/seo";
+import { SITE, devicePath } from "@/lib/site";
 
-useHead({
-  title: "About & credits",
-  meta: [
-    { name: "description", content: "What the Pocket Museum is, where its content comes from, how to add an exhibit, and the credits for every photograph." },
-    { property: "og:title", content: `About & credits · ${SITE.name}` },
-    { property: "og:url", content: absoluteUrl("/about") },
-  ],
-  link: [{ rel: "canonical", href: absoluteUrl("/about") }],
-});
+usePageSeo(aboutSeo(devices));
 
 const photoCredits = devices.map((d) => ({ device: d, credit: d.hero.credit }));
 
@@ -148,7 +140,7 @@ const td = "border-t border-line px-[0.8rem] py-[0.55rem] align-top text-ink-2 [
           </thead>
           <tbody>
             <tr v-for="{ device, credit } in photoCredits" :key="device.slug">
-              <td :class="td"><router-link :to="`/devices/${device.slug}`" class="!text-cyan hover:underline">{{ device.shortName }}</router-link></td>
+              <td :class="td"><router-link :to="devicePath(device.slug)" class="!text-cyan hover:underline">{{ device.shortName }}</router-link></td>
               <td :class="td">
                 <a v-if="credit.sourceUrl" :href="credit.sourceUrl" target="_blank" rel="noreferrer">{{ credit.source }}</a>
                 <template v-else>{{ credit.source }}</template>

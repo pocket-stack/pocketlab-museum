@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useHead } from "@unhead/vue";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import CodeViewer from "@/components/CodeViewer.vue";
@@ -16,7 +15,8 @@ import NotFoundPage from "@/pages/NotFoundPage.vue";
 import { FAMILY_LABEL, PATH_LABEL, deviceBySlug, devices } from "@/data/devices";
 import { githubTreeUrl, hasCode, hasDoc, loadCode, loadDoc } from "@/data/upstream";
 import { inlineCode } from "@/lib/inline-code";
-import { SITE, absoluteUrl } from "@/lib/site";
+import { deviceBreadcrumbJsonLd, deviceSeo, usePageSeo } from "@/lib/seo";
+import { devicePath } from "@/lib/site";
 
 const route = useRoute();
 const slug = computed(() => String(route.params.slug ?? ""));
@@ -41,22 +41,7 @@ const [primaryDoc, primaryCode] = await Promise.all([
 const guideIndex = String(3 + (device?.gallery.length ? 1 : 0) + (primaryCode ? 1 : 0)).padStart(2, "0");
 
 if (device) {
-  const title = device.name;
-  const description = `${device.tagline} ${device.headline.cpu} · ${device.headline.memory} · ${device.headline.display}. How PocketJS runs on the ${device.shortName}, with the upstream bring-up guide.`;
-  useHead({
-    title,
-    meta: [
-      { name: "description", content: description },
-      { property: "og:title", content: `${title} · ${SITE.name}` },
-      { property: "og:description", content: description },
-      { property: "og:url", content: absoluteUrl(`/devices/${device.slug}`) },
-      { property: "og:image", content: absoluteUrl(device.hero.src) },
-      { name: "twitter:title", content: `${title} · ${SITE.name}` },
-      { name: "twitter:description", content: description },
-      { name: "twitter:image", content: absoluteUrl(device.hero.src) },
-    ],
-    link: [{ rel: "canonical", href: absoluteUrl(`/devices/${device.slug}`) }],
-  });
+  usePageSeo(deviceSeo(device), [deviceBreadcrumbJsonLd(device)]);
 }
 
 const subHead = "mt-6 mb-2 font-mono text-[0.66rem] font-medium tracking-[0.14em] text-cyan uppercase first:mt-0";
@@ -76,9 +61,7 @@ const neighbour =
         >
           <router-link to="/">Museum</router-link>
           <span aria-hidden="true">/</span>
-          <router-link :to="device.collection === 'permanent' ? '/#collection' : '/#workbench'">
-            {{ device.collection === "permanent" ? "Permanent collection" : "Workbench" }}
-          </router-link>
+          <router-link to="/catalog/">Catalogue</router-link>
           <span aria-hidden="true">/</span>
           <span class="text-ink-2">{{ device.shortName }}</span>
         </nav>
@@ -261,7 +244,7 @@ const neighbour =
         </div>
 
         <nav class="mt-8 flex flex-col justify-between gap-4 min-[521px]:flex-row" aria-label="Other exhibits">
-          <router-link v-if="prev" :to="`/devices/${prev.slug}`" :class="neighbour">
+          <router-link v-if="prev" :to="devicePath(prev.slug)" :class="neighbour">
             <span class="mlabel">← Previous</span>
             <span class="font-semibold text-ink">{{ prev.shortName }}</span>
             <span class="font-mono text-[0.68rem] text-amber">{{ prev.year }}</span>
@@ -269,7 +252,7 @@ const neighbour =
           <span v-else></span>
           <router-link
             v-if="next"
-            :to="`/devices/${next.slug}`"
+            :to="devicePath(next.slug)"
             :class="[neighbour, 'min-[521px]:items-end min-[521px]:text-right']"
           >
             <span class="mlabel">Next →</span>
